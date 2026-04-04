@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CareerVault — Your Career Data, One Place</title>
+  <meta name="description" content="CareerVault is a centralized platform to store personal, educational, and professional details for quick job application filling." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="icon" type="image/png" href="logo.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ─── Sidebar ─── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <img src="logo.png" alt="CareerVault" class="brand-logo" />
+      <h1>CareerVault</h1>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a href="#" class="nav-item active" data-section="dashboard" id="nav-dashboard">
+        <span class="material-icons-round">dashboard</span>
+        <span>Dashboard</span>
+      </a>
+      <a href="#" class="nav-item" data-section="profile" id="nav-profile">
+        <span class="material-icons-round">person</span>
+        <span>Profile</span>
+      </a>
+      <a href="#" class="nav-item" data-section="skills" id="nav-skills">
+        <span class="material-icons-round">psychology</span>
+        <span>Skills</span>
+      </a>
+      <a href="#" class="nav-item" data-section="education" id="nav-education">
+        <span class="material-icons-round">school</span>
+        <span>Education</span>
+      </a>
+      <a href="#" class="nav-item" data-section="experience" id="nav-experience">
+        <span class="material-icons-round">business_center</span>
+        <span>Experience</span>
+      </a>
+      <a href="#" class="nav-item" data-section="documents" id="nav-documents">
+        <span class="material-icons-round">folder_open</span>
+        <span>Documents</span>
+      </a>
+    </nav>
+
+    <!-- Export / Import actions -->
+    <div class="sidebar-actions">
+      <button class="sidebar-action-btn" id="btn-export" title="Export all data as JSON">
+        <span class="material-icons-round">download</span>
+        <span>Export Data</span>
+      </button>
+      <label class="sidebar-action-btn" id="btn-import-label" title="Import data from JSON">
+        <span class="material-icons-round">upload</span>
+        <span>Import Data</span>
+        <input type="file" id="import-file-input" accept=".json" style="display:none" />
+      </label>
+    </div>
+  </aside>
+
+  <!-- ─── Mobile Top Bar ─── -->
+  <header class="topbar" id="topbar">
+    <button class="topbar-menu" id="btn-menu">
+      <span class="material-icons-round">menu</span>
+    </button>
+    <h2 class="topbar-title">CareerVault</h2>
+  </header>
+
+  <!-- ─── Overlay for mobile sidebar ─── -->
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <!-- ─── Main Content ─── -->
+  <main class="main" id="main">
+
+    <!-- ─── Content Header ─── -->
+    <div class="content-header" id="content-header">
+      <div class="content-header-left">
+        <p class="greeting" id="greeting-text">Good evening 👋</p>
+      </div>
+      <div class="content-header-right">
+        <button class="theme-toggle" id="btn-theme-toggle" title="Toggle dark/light mode">
+          <span class="material-icons-round" id="theme-icon">dark_mode</span>
+        </button>
+        <div class="content-header-badge" id="user-profile-badge">
+          <div class="user-avatar" id="user-avatar">
+            <span class="material-icons-round">person</span>
+          </div>
+          <div class="user-info">
+            <span class="user-name" id="user-name">Guest User</span>
+            <span class="user-email" id="user-email">Set up your profile</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ DASHBOARD ══════════ -->
+    <section class="section active" id="section-dashboard">
+      <div class="section-header">
+        <h2>Dashboard</h2>
+        <p class="section-subtitle">Your career data at a glance</p>
+      </div>
+
+      <div class="stats-grid" id="stats-grid">
+        <!-- Filled by JS -->
+      </div>
+
+      <!-- Profile Progress Bar -->
+      <div class="profile-progress-card" id="profile-progress-card" style="display:none">
+        <div class="progress-header">
+          <span class="material-icons-round">trending_up</span>
+          <div>
+            <h4>Profile Strength</h4>
+            <p class="progress-missing" id="progress-missing"></p>
+          </div>
+          <span class="progress-pct" id="progress-pct-label">0%</span>
+        </div>
+        <div class="progress-bar-track">
+          <div class="progress-bar-fill" id="progress-bar-fill"></div>
+        </div>
+      </div>
+
+      <div class="dashboard-welcome" id="dashboard-welcome">
+        <div class="welcome-card">
+          <span class="material-icons-round welcome-icon">rocket_launch</span>
+          <h3>Welcome to CareerVault!</h3>
+          <p>Start by adding your profile details, education history, work experience, and important documents. Everything you add is stored locally on your device.</p>
+          <button class="btn btn-primary" id="btn-get-started">Get Started</button>
+        </div>
+      </div>
+
+      <div class="dashboard-recent" id="dashboard-recent">
+        <h3 class="subsection-title">Quick Actions</h3>
+        <div class="quick-actions">
+          <button class="quick-action-card" data-goto="profile">
+            <span class="material-icons-round">person_add</span>
+            <span>Edit Profile</span>
+          </button>
+          <button class="quick-action-card" data-goto="skills">
+            <span class="material-icons-round">psychology</span>
+            <span>Add Skills</span>
+          </button>
+          <button class="quick-action-card" data-goto="education">
+            <span class="material-icons-round">add_circle</span>
+            <span>Add Education</span>
+          </button>
+          <button class="quick-action-card" data-goto="experience">
+            <span class="material-icons-round">add_business</span>
+            <span>Add Experience</span>
+          </button>
+          <button class="quick-action-card" data-goto="documents">
+            <span class="material-icons-round">upload_file</span>
+            <span>Upload Document</span>
+          </button>
+        </div>
+
+        <!-- Keyboard shortcuts legend -->
+        <div class="shortcuts-legend">
+          <h4 class="subsection-title" style="margin-top:var(--sp-8)">⌨️ Keyboard Shortcuts</h4>
+          <div class="shortcuts-grid">
+            <span class="shortcut-item"><kbd>Ctrl+1</kbd> Dashboard</span>
+            <span class="shortcut-item"><kbd>Ctrl+2</kbd> Profile</span>
+            <span class="shortcut-item"><kbd>Ctrl+3</kbd> Skills</span>
+            <span class="shortcut-item"><kbd>Ctrl+4</kbd> Education</span>
+            <span class="shortcut-item"><kbd>Ctrl+5</kbd> Experience</span>
+            <span class="shortcut-item"><kbd>Ctrl+6</kbd> Documents</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ PROFILE ══════════ -->
+    <section class="section" id="section-profile">
+      <div class="section-header">
+        <h2>Personal Profile</h2>
+        <p class="section-subtitle">Your personal and contact information</p>
+      </div>
+
+      <!-- Profile Photo Upload -->
+      <div class="card photo-upload-card">
+        <div class="photo-upload-area" id="photo-upload-area">
+          <div class="photo-preview" id="photo-preview">
+            <span class="material-icons-round">person</span>
+          </div>
+          <div class="photo-upload-info">
+            <h4>Profile Photo</h4>
+            <p>Upload your photo to personalise your vault and badge</p>
+            <div style="display:flex;gap:var(--sp-2);flex-wrap:wrap;margin-top:var(--sp-3)">
+              <label class="btn btn-outline btn-sm" style="cursor:pointer">
+                <span class="material-icons-round">photo_camera</span> Choose Photo
+                <input type="file" id="profile-photo-input" accept="image/*" style="display:none" />
+              </label>
+              <button class="btn btn-outline btn-sm" id="btn-remove-photo" style="display:none">
+                <span class="material-icons-round">delete</span> Remove
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <form class="profile-form card" id="profile-form" autocomplete="off">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="profile-firstName">First Name</label>
+            <input type="text" id="profile-firstName" placeholder="John" required />
+          </div>
+          <div class="form-group">
+            <label for="profile-lastName">Last Name</label>
+            <input type="text" id="profile-lastName" placeholder="Doe" required />
+          </div>
+          <div class="form-group">
+            <label for="profile-email">Email</label>
+            <input type="email" id="profile-email" placeholder="john@example.com" required />
+          </div>
+          <div class="form-group">
+            <label for="profile-phone">Phone</label>
+            <input type="tel" id="profile-phone" placeholder="+91 98765 43210" />
+          </div>
+          <div class="form-group">
+            <label for="profile-dob">Date of Birth</label>
+            <input type="date" id="profile-dob" />
+          </div>
+          <div class="form-group">
+            <label for="profile-gender">Gender</label>
+            <select id="profile-gender">
+              <option value="">Select</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="form-group full-width">
+            <label for="profile-address">Address</label>
+            <textarea id="profile-address" rows="3" placeholder="123 Main St, City, State, PIN"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="profile-linkedin">LinkedIn URL</label>
+            <input type="url" id="profile-linkedin" placeholder="https://linkedin.com/in/johndoe" />
+          </div>
+          <div class="form-group">
+            <label for="profile-github">GitHub / Portfolio URL</label>
+            <input type="url" id="profile-github" placeholder="https://github.com/johndoe" />
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary" id="btn-save-profile">
+            <span class="material-icons-round">save</span> Save Profile
+          </button>
+        </div>
+      </form>
+
+      <!-- Quick-copy Card -->
+      <div class="card quick-copy-card" id="profile-quickcopy" style="display:none">
+        <h4 class="subsection-title" style="margin-bottom:var(--sp-4)">
+          <span class="material-icons-round" style="vertical-align:middle;font-size:18px;">content_copy</span>
+          Quick Copy
+        </h4>
+        <div class="copy-grid" id="copy-grid">
+          <!-- Filled by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ SKILLS ══════════ -->
+    <section class="section" id="section-skills">
+      <div class="section-header">
+        <h2>Skills</h2>
+        <p class="section-subtitle">Your technical and professional competencies</p>
+      </div>
+
+      <!-- Add skill inline form -->
+      <div class="card skill-add-card">
+        <div class="skill-add-form">
+          <input type="text" id="skill-name-input" placeholder="e.g. React, Python, Figma…" maxlength="40" />
+          <select id="skill-level-input">
+            <option value="Beginner">Beginner</option>
+            <option value="Intermediate" selected>Intermediate</option>
+            <option value="Expert">Expert</option>
+          </select>
+          <button class="btn btn-primary" id="btn-add-skill">
+            <span class="material-icons-round">add</span> Add Skill
+          </button>
+        </div>
+      </div>
+
+      <div class="skills-board" id="skills-board">
+        <!-- Filled by JS — groups by level -->
+      </div>
+    </section>
+
+    <!-- ══════════ EDUCATION ══════════ -->
+    <section class="section" id="section-education">
+      <div class="section-header">
+        <h2>Education</h2>
+        <p class="section-subtitle">Your academic qualifications</p>
+        <button class="btn btn-primary" id="btn-add-education">
+          <span class="material-icons-round">add</span> Add Education
+        </button>
+      </div>
+
+      <div class="records-list" id="education-list">
+        <!-- Filled by JS -->
+      </div>
+
+      <div class="empty-state" id="education-empty">
+        <span class="material-icons-round">school</span>
+        <h3>No education records yet</h3>
+        <p>Add your academic qualifications to keep them handy.</p>
+      </div>
+    </section>
+
+    <!-- ══════════ EXPERIENCE ══════════ -->
+    <section class="section" id="section-experience">
+      <div class="section-header">
+        <h2>Experience</h2>
+        <p class="section-subtitle">Your professional journey</p>
+        <button class="btn btn-primary" id="btn-add-experience">
+          <span class="material-icons-round">add</span> Add Experience
+        </button>
+      </div>
+
+      <div class="records-list" id="experience-list">
+        <!-- Filled by JS -->
+      </div>
+
+      <div class="empty-state" id="experience-empty">
+        <span class="material-icons-round">business_center</span>
+        <h3>No experience records yet</h3>
+        <p>Add your work history and professional experience.</p>
+      </div>
+    </section>
+
+    <!-- ══════════ DOCUMENTS ══════════ -->
+    <section class="section" id="section-documents">
+      <div class="section-header">
+        <h2>Documents</h2>
+        <p class="section-subtitle">Your important files and certificates</p>
+        <button class="btn btn-primary" id="btn-add-document">
+          <span class="material-icons-round">upload_file</span> Upload Document
+        </button>
+      </div>
+
+      <div class="records-list documents-grid" id="documents-list">
+        <!-- Filled by JS -->
+      </div>
+
+      <div class="empty-state" id="documents-empty">
+        <span class="material-icons-round">folder_open</span>
+        <h3>No documents uploaded</h3>
+        <p>Upload your resume, certificates, ID proofs and more.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ─── Modal ─── -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal" id="modal">
+      <div class="modal-header">
+        <h3 id="modal-title">Add Record</h3>
+        <button class="modal-close" id="modal-close">
+          <span class="material-icons-round">close</span>
+        </button>
+      </div>
+      <div class="modal-body" id="modal-body">
+        <!-- Dynamic form content -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── Toast ─── -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
