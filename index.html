@@ -11,6 +11,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+  <!-- PDF.js for PDF text extraction -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <!-- Mammoth.js for DOCX text extraction -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+  <!-- Google Identity Services -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
 
@@ -42,22 +48,26 @@
         <span class="material-icons-round">business_center</span>
         <span>Experience</span>
       </a>
+      <a href="#" class="nav-item" data-section="projects" id="nav-projects">
+        <span class="material-icons-round">rocket_launch</span>
+        <span>Projects</span>
+      </a>
       <a href="#" class="nav-item" data-section="documents" id="nav-documents">
         <span class="material-icons-round">folder_open</span>
         <span>Documents</span>
       </a>
     </nav>
 
-    <!-- Export / Import actions -->
+    <!-- Sidebar action buttons -->
     <div class="sidebar-actions">
-      <button class="sidebar-action-btn" id="btn-export" title="Export all data as JSON">
-        <span class="material-icons-round">download</span>
-        <span>Export Data</span>
-      </button>
-      <label class="sidebar-action-btn" id="btn-import-label" title="Import data from JSON">
-        <span class="material-icons-round">upload</span>
-        <span>Import Data</span>
-        <input type="file" id="import-file-input" accept=".json" style="display:none" />
+      <a href="#" class="sidebar-action-btn nav-item" data-section="resume" id="nav-resume" style="text-decoration:none">
+        <span class="material-icons-round">description</span>
+        <span>Resume Builder</span>
+      </a>
+      <label class="sidebar-action-btn" id="btn-import-label" title="Import resume (PDF/Word/TXT) or vault backup (JSON)" style="cursor:pointer">
+        <span class="material-icons-round">upload_file</span>
+        <span>Import Resume</span>
+        <input type="file" id="import-file-input" accept=".json,.txt,.docx,.pdf" style="display:none" />
       </label>
     </div>
   </aside>
@@ -94,6 +104,10 @@
             <span class="user-email" id="user-email">Set up your profile</span>
           </div>
         </div>
+        <button class="signout-btn" id="btn-signout" title="Sign out">
+          <span class="material-icons-round">logout</span>
+          <span>Sign out</span>
+        </button>
       </div>
     </div>
 
@@ -212,8 +226,8 @@
             <input type="text" id="profile-lastName" placeholder="Doe" required />
           </div>
           <div class="form-group">
-            <label for="profile-email">Email</label>
-            <input type="email" id="profile-email" placeholder="john@example.com" required />
+            <label for="profile-email">Email <span class="material-icons-round" style="font-size:12px;opacity:0.5" title="Managed by Google">lock</span></label>
+            <input type="email" id="profile-email" placeholder="john@example.com" readonly style="background:rgba(0,0,0,0.02);cursor:not-allowed;" />
           </div>
           <div class="form-group">
             <label for="profile-phone">Phone</label>
@@ -269,6 +283,14 @@
       <div class="section-header">
         <h2>Skills</h2>
         <p class="section-subtitle">Your technical and professional competencies</p>
+        <div style="display:flex;gap:16px;margin-top:var(--sp-4);align-items:center">
+          <label class="multi-select-wrap" style="display:none;align-items:center;gap:6px;cursor:pointer;font-size:13px;font-weight:600" id="wrap-select-skills">
+            <input type="checkbox" id="chk-all-skills" style="accent-color:var(--clr-primary);width:16px;height:16px" /> Select All
+          </label>
+          <button class="btn btn-outline btn-sm btn-danger-outline" id="btn-clear-skills" style="display:none;margin-top:0;height:fit-content" disabled>
+            <span class="material-icons-round">delete_sweep</span> Delete Selected
+          </button>
+        </div>
       </div>
 
       <!-- Add skill inline form -->
@@ -296,9 +318,17 @@
       <div class="section-header">
         <h2>Education</h2>
         <p class="section-subtitle">Your academic qualifications</p>
-        <button class="btn btn-primary" id="btn-add-education">
-          <span class="material-icons-round">add</span> Add Education
-        </button>
+        <div style="display:flex;gap:16px;margin-top:var(--sp-4);align-items:center">
+          <label class="multi-select-wrap" style="display:none;align-items:center;gap:6px;cursor:pointer;font-size:13px;font-weight:600" id="wrap-select-education">
+            <input type="checkbox" id="chk-all-education" style="accent-color:var(--clr-primary);width:16px;height:16px" /> Select All
+          </label>
+          <button class="btn btn-outline btn-sm btn-danger-outline" id="btn-clear-education" style="display:none;margin-top:0;height:fit-content" disabled>
+            <span class="material-icons-round">delete_sweep</span> Delete Selected
+          </button>
+          <button class="btn btn-primary" id="btn-add-education" style="margin-top:0">
+            <span class="material-icons-round">add</span> Add Education
+          </button>
+        </div>
       </div>
 
       <div class="records-list" id="education-list">
@@ -317,9 +347,17 @@
       <div class="section-header">
         <h2>Experience</h2>
         <p class="section-subtitle">Your professional journey</p>
-        <button class="btn btn-primary" id="btn-add-experience">
-          <span class="material-icons-round">add</span> Add Experience
-        </button>
+        <div style="display:flex;gap:16px;margin-top:var(--sp-4);align-items:center">
+          <label class="multi-select-wrap" style="display:none;align-items:center;gap:6px;cursor:pointer;font-size:13px;font-weight:600" id="wrap-select-experience">
+            <input type="checkbox" id="chk-all-experience" style="accent-color:var(--clr-primary);width:16px;height:16px" /> Select All
+          </label>
+          <button class="btn btn-outline btn-sm btn-danger-outline" id="btn-clear-experience" style="display:none;margin-top:0;height:fit-content" disabled>
+            <span class="material-icons-round">delete_sweep</span> Delete Selected
+          </button>
+          <button class="btn btn-primary" id="btn-add-experience" style="margin-top:0">
+            <span class="material-icons-round">add</span> Add Experience
+          </button>
+        </div>
       </div>
 
       <div class="records-list" id="experience-list">
@@ -338,9 +376,17 @@
       <div class="section-header">
         <h2>Documents</h2>
         <p class="section-subtitle">Your important files and certificates</p>
-        <button class="btn btn-primary" id="btn-add-document">
-          <span class="material-icons-round">upload_file</span> Upload Document
-        </button>
+        <div style="display:flex;gap:16px;margin-top:var(--sp-4);align-items:center">
+          <label class="multi-select-wrap" style="display:none;align-items:center;gap:6px;cursor:pointer;font-size:13px;font-weight:600" id="wrap-select-documents">
+            <input type="checkbox" id="chk-all-documents" style="accent-color:var(--clr-primary);width:16px;height:16px" /> Select All
+          </label>
+          <button class="btn btn-outline btn-sm btn-danger-outline" id="btn-clear-documents" style="display:none;margin-top:0;height:fit-content" disabled>
+            <span class="material-icons-round">delete_sweep</span> Delete Selected
+          </button>
+          <button class="btn btn-primary" id="btn-add-document" style="margin-top:0">
+            <span class="material-icons-round">upload_file</span> Upload Document
+          </button>
+        </div>
       </div>
 
       <div class="records-list documents-grid" id="documents-list">
@@ -351,6 +397,145 @@
         <span class="material-icons-round">folder_open</span>
         <h3>No documents uploaded</h3>
         <p>Upload your resume, certificates, ID proofs and more.</p>
+      </div>
+    </section>
+
+    <!-- ══════════ PROJECTS ══════════ -->
+    <section class="section" id="section-projects">
+      <div class="section-header">
+        <h2>Projects</h2>
+        <p class="section-subtitle">Your portfolio of work and side projects</p>
+        <div style="display:flex;gap:16px;margin-top:var(--sp-4);align-items:center">
+          <label class="multi-select-wrap" style="display:none;align-items:center;gap:6px;cursor:pointer;font-size:13px;font-weight:600" id="wrap-select-projects">
+            <input type="checkbox" id="chk-all-projects" style="accent-color:var(--clr-primary);width:16px;height:16px" /> Select All
+          </label>
+          <button class="btn btn-outline btn-sm btn-danger-outline" id="btn-clear-projects" style="display:none;margin-top:0;height:fit-content" disabled>
+            <span class="material-icons-round">delete_sweep</span> Delete Selected
+          </button>
+          <button class="btn btn-primary" id="btn-add-project" style="margin-top:0">
+            <span class="material-icons-round">add</span> Add Project
+          </button>
+        </div>
+      </div>
+      <div class="records-list" id="projects-list"></div>
+      <div class="empty-state" id="projects-empty">
+        <span class="material-icons-round">rocket_launch</span>
+        <h3>No projects added yet</h3>
+        <p>Showcase your work — personal, open-source, or freelance.</p>
+      </div>
+    </section>
+
+    <!-- ══════════ RESUME BUILDER ══════════ -->
+    <section class="section resume-section" id="section-resume">
+      <div class="section-header">
+        <h2>Resume Builder</h2>
+        <p class="section-subtitle">Auto-built from your vault — tailored to any job</p>
+        <div class="dl-btn-group">
+          <button class="btn btn-primary" id="btn-download-pdf">
+            <span class="material-icons-round">picture_as_pdf</span> PDF
+          </button>
+          <button class="btn btn-outline" id="btn-download-word">
+            <span class="material-icons-round">article</span> Word
+          </button>
+        </div>
+      </div>
+
+      <div class="resume-builder-layout">
+
+        <!-- Controls Panel -->
+        <div class="resume-controls card">
+          <h4 class="controls-title"><span class="material-icons-round">tune</span> Customise</h4>
+
+          <div class="controls-group">
+            <label class="controls-label">Theme</label>
+            <div class="theme-pills">
+              <button class="theme-pill active" data-theme="classic">Classic</button>
+              <button class="theme-pill" data-theme="modern">Modern</button>
+              <button class="theme-pill" data-theme="minimal">Minimal</button>
+            </div>
+          </div>
+
+          <div class="controls-group">
+            <label class="controls-label">Font Size</label>
+            <div class="theme-pills">
+              <button class="theme-pill" data-fontsize="compact">Compact</button>
+              <button class="theme-pill active" data-fontsize="standard">Standard</button>
+              <button class="theme-pill" data-fontsize="spacious">Spacious</button>
+            </div>
+          </div>
+
+          <div class="controls-group">
+            <label class="controls-label">Sections</label>
+            <div class="section-toggles">
+              <label class="toggle-item"><input type="checkbox" class="resume-toggle" data-sec="summary" checked /><span>Summary</span></label>
+              <label class="toggle-item"><input type="checkbox" class="resume-toggle" data-sec="skills" checked /><span>Skills</span></label>
+              <label class="toggle-item"><input type="checkbox" class="resume-toggle" data-sec="experience" checked /><span>Experience</span></label>
+              <label class="toggle-item"><input type="checkbox" class="resume-toggle" data-sec="education" checked /><span>Education</span></label>
+              <label class="toggle-item"><input type="checkbox" class="resume-toggle" data-sec="projects" checked /><span>Projects</span></label>
+            </div>
+          </div>
+
+          <div class="controls-group">
+            <label class="controls-label">Options</label>
+            <label class="toggle-item"><input type="checkbox" id="resume-show-photo" checked /><span>Show Photo</span></label>
+            <label class="toggle-item"><input type="checkbox" id="resume-show-links" checked /><span>Show Links</span></label>
+          </div>
+
+          <!-- ATS Score -->
+          <div class="ats-score-card" id="ats-score-card">
+            <div class="ats-score-header">
+              <span class="material-icons-round">verified</span>
+              <div>
+                <h5>ATS Score</h5>
+                <p id="ats-score-label">Calculating…</p>
+              </div>
+              <span class="ats-pct" id="ats-pct">—</span>
+            </div>
+            <div class="progress-bar-track" style="margin-top:8px">
+              <div class="progress-bar-fill" id="ats-bar" style="width:0%"></div>
+            </div>
+            <ul class="ats-hints" id="ats-hints"></ul>
+          </div>
+
+          <!-- ✨ AI Resume Tailor -->
+          <div class="jd-panel">
+            <div class="jd-panel-header">
+              <span class="material-icons-round" style="color:var(--clr-primary)">auto_awesome</span>
+              <div>
+                <h4 style="font-size:var(--fs-sm);font-weight:700;margin:0">Tailor to Job</h4>
+                <p style="font-size:var(--fs-xs);color:var(--clr-text-sec);margin:0">AI frames your resume for the role</p>
+              </div>
+            </div>
+            <textarea id="jd-input" rows="5" placeholder="Paste a job description here and the resume will be reframed around it — summary, skill order, and focus adjusted to match the role."></textarea>
+            <button class="btn btn-primary btn-sm" id="btn-analyse-jd" style="width:100%;margin-top:var(--sp-3)">
+              <span class="material-icons-round">auto_fix_high</span> Tailor My Resume
+            </button>
+
+            <!-- Results -->
+            <div id="jd-results" style="display:none">
+              <div class="jd-result-card" id="jd-result-card">
+                <div class="jd-result-role" id="jd-result-role"></div>
+                <div class="jd-result-body" id="jd-result-body"></div>
+                <button class="btn btn-primary btn-sm" id="btn-apply-jd" style="width:100%;margin-top:var(--sp-3)">
+                  <span class="material-icons-round">preview</span> Apply to Resume Preview
+                </button>
+                <button class="btn btn-outline btn-sm" id="btn-reset-jd" style="width:100%;margin-top:var(--sp-2)">
+                  <span class="material-icons-round">refresh</span> Reset to Original
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
+        <!-- Live Preview -->
+        <div class="resume-preview-wrap" id="resume-preview-wrap">
+          <div class="resume-sheet" id="resume-sheet">
+            <!-- Built by JS -->
+          </div>
+        </div>
+
       </div>
     </section>
 
@@ -368,6 +553,37 @@
       <div class="modal-body" id="modal-body">
         <!-- Dynamic form content -->
       </div>
+    </div>
+  </div>
+
+  <!-- ─── Login Overlay ─── -->
+  <div class="login-overlay" id="login-overlay">
+    <div class="login-card">
+      <div class="login-brand">
+        <img src="logo.png" alt="CareerVault" class="login-logo" />
+        <h1 class="login-title">CareerVault</h1>
+        <p class="login-subtitle">Your career data, one place</p>
+      </div>
+      <div class="login-divider"></div>
+      <p class="login-prompt">Sign in to access your vault</p>
+      <!-- Google Identity Services renders the button here -->
+      <div id="g_id_onload"
+           data-client_id="256175708144-4f7d16cpcr1loqjjpf85q1gqqh5khsrr.apps.googleusercontent.com"
+           data-context="signin"
+           data-ux_mode="popup"
+           data-callback="handleGoogleCredential"
+           data-auto_prompt="false">
+      </div>
+      <div class="g_id_signin"
+           data-type="standard"
+           data-shape="pill"
+           data-theme="outline"
+           data-text="signin_with"
+           data-size="large"
+           data-logo_alignment="left"
+           data-width="280">
+      </div>
+      <p class="login-tos">By signing in you agree to keep your data private and local.</p>
     </div>
   </div>
 

@@ -1075,3 +1075,310 @@ img { max-width: 100%; display: block; }
 .shortcuts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: var(--sp-2) var(--sp-4); margin-top: var(--sp-3); }
 .shortcut-item { display: flex; align-items: center; gap: var(--sp-2); font-size: var(--fs-sm); color: var(--clr-text-sec); }
 kbd { display: inline-block; padding: 2px var(--sp-2); background: var(--clr-surface); border: 1px solid var(--clr-border); border-radius: 4px; font-size: var(--fs-xs); font-family: monospace; color: var(--clr-text); box-shadow: 0 1px 0 var(--clr-border); white-space: nowrap; }
+
+/* ═══════════════════════════════════════════
+   PROJECT CARDS
+   ═══════════════════════════════════════════ */
+.project-card { background: var(--clr-surface); border: 1px solid var(--clr-border); border-radius: var(--radius); padding: var(--sp-5) var(--sp-6); margin-bottom: var(--sp-4); box-shadow: var(--shadow-sm); transition: box-shadow .2s var(--ease); position: relative; }
+.project-card:hover { box-shadow: var(--shadow-md); }
+.project-card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--sp-4); margin-bottom: var(--sp-3); }
+.project-card-title { font-size: var(--fs-lg); font-weight: 700; color: var(--clr-text); }
+.project-card-role { font-size: var(--fs-sm); color: var(--clr-primary); font-weight: 600; margin-top: 2px; }
+.project-card-duration { font-size: var(--fs-xs); color: var(--clr-text-sec); margin-top: 2px; }
+.project-card-desc { font-size: var(--fs-sm); color: var(--clr-text-sec); line-height: 1.6; margin-bottom: var(--sp-4); }
+.project-card-tech { display: flex; flex-wrap: wrap; gap: var(--sp-2); margin-bottom: var(--sp-4); }
+.tech-chip { display: inline-block; padding: 3px 10px; border-radius: var(--radius-full); font-size: var(--fs-xs); font-weight: 600; background: rgba(56,120,231,.1); color: var(--clr-primary); border: 1px solid rgba(56,120,231,.2); }
+.project-card-links { display: flex; gap: var(--sp-3); }
+.project-link { display: inline-flex; align-items: center; gap: var(--sp-1); font-size: var(--fs-sm); font-weight: 600; color: var(--clr-primary); text-decoration: none; transition: opacity .15s; }
+.project-link:hover { opacity: .75; }
+.project-link .material-icons-round { font-size: 16px; }
+.project-card-actions { display: flex; gap: var(--sp-2); }
+
+/* ═══════════════════════════════════════════
+   RESUME BUILDER LAYOUT
+   ═══════════════════════════════════════════ */
+.resume-section { overflow: visible; }
+.resume-builder-layout { display: grid; grid-template-columns: 280px 1fr; gap: var(--sp-6); align-items: start; }
+
+/* Controls */
+.resume-controls { padding: var(--sp-5); position: sticky; top: var(--sp-6); }
+.controls-title { display: flex; align-items: center; gap: var(--sp-2); font-size: var(--fs-base); font-weight: 700; margin-bottom: var(--sp-5); }
+.controls-title .material-icons-round { font-size: 20px; color: var(--clr-primary); }
+.controls-group { margin-bottom: var(--sp-5); }
+.controls-label { display: block; font-size: var(--fs-xs); font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--clr-text-sec); margin-bottom: var(--sp-2); }
+.theme-pills { display: flex; gap: var(--sp-2); flex-wrap: wrap; }
+.theme-pill { padding: var(--sp-1) var(--sp-3); border-radius: var(--radius-full); font-size: var(--fs-xs); font-weight: 600; border: 1.5px solid var(--clr-border); background: var(--clr-bg); color: var(--clr-text-sec); cursor: pointer; transition: all .15s var(--ease); }
+.theme-pill:hover { border-color: var(--clr-primary); color: var(--clr-primary); }
+.theme-pill.active { border-color: var(--clr-primary); background: var(--clr-primary); color: #fff; }
+.section-toggles { display: flex; flex-direction: column; gap: var(--sp-2); }
+.toggle-item { display: flex; align-items: center; gap: var(--sp-2); font-size: var(--fs-sm); color: var(--clr-text); cursor: pointer; }
+.toggle-item input[type="checkbox"] { accent-color: var(--clr-primary); width: 15px; height: 15px; cursor: pointer; }
+
+/* ATS Score card */
+.ats-score-card { margin-top: var(--sp-5); background: var(--clr-bg); border: 1px solid var(--clr-border); border-radius: var(--radius-sm); padding: var(--sp-4); }
+.ats-score-header { display: flex; align-items: center; gap: var(--sp-3); margin-bottom: var(--sp-2); }
+.ats-score-header .material-icons-round { font-size: 24px; color: var(--clr-primary); flex-shrink: 0; }
+.ats-score-header h5 { font-size: var(--fs-sm); font-weight: 700; margin-bottom: 0; }
+.ats-score-header p { font-size: var(--fs-xs); color: var(--clr-text-sec); }
+.ats-pct { margin-left: auto; font-size: var(--fs-xl); font-weight: 800; color: var(--clr-primary); }
+.ats-hints { margin-top: var(--sp-3); padding-left: var(--sp-4); list-style: disc; }
+.ats-hints li { font-size: var(--fs-xs); color: var(--clr-text-sec); margin-bottom: 4px; }
+
+/* Resume preview wrapper */
+.resume-preview-wrap { background: var(--clr-bg); border-radius: var(--radius); padding: var(--sp-4); border: 1px solid var(--clr-border); min-height: 500px; overflow-x: auto; overflow-y: auto; display: flex; justify-content: flex-start; align-items: flex-start; }
+
+/* ═══════════════════════════════════════════
+   RESUME SHEET — screen view
+   ═══════════════════════════════════════════ */
+.resume-sheet {
+  background: #fff;
+  color: #1a1a2e;
+  font-family: 'Inter', 'Georgia', serif;
+  width: 794px;
+  min-width: 794px;
+  min-height: 1123px;
+  box-shadow: 0 8px 40px rgba(0,0,0,.18);
+  border-radius: 4px;
+  overflow: hidden;
+  font-size: 13px;
+  line-height: 1.55;
+  flex-shrink: 0;
+}
+
+/* ── Classic theme (default) ── */
+.resume-sheet.theme-classic .rs-header { background: #1a1a2e; color: #fff; padding: 32px 40px 28px; }
+.resume-sheet.theme-classic .rs-name  { font-size: 28px; font-weight: 800; letter-spacing: -.02em; }
+.resume-sheet.theme-classic .rs-title { font-size: 14px; color: #a5b4fc; margin-top: 4px; font-weight: 500; }
+.resume-sheet.theme-classic .rs-contact { display: flex; flex-wrap: wrap; gap: 4px 20px; margin-top: 12px; font-size: 12px; color: #cbd5e1; }
+.resume-sheet.theme-classic .rs-contact a { color: #a5b4fc; text-decoration: none; }
+.resume-sheet.theme-classic .rs-section-title { border-bottom: 2px solid #1a1a2e; color: #1a1a2e; margin-bottom: 10px; padding-bottom: 4px; font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; }
+
+/* ── Modern theme ── */
+.resume-sheet.theme-modern .rs-header { background: linear-gradient(135deg, #3878e7 0%, #7c3aed 100%); color: #fff; padding: 32px 40px 28px; }
+.resume-sheet.theme-modern .rs-name  { font-size: 28px; font-weight: 800; }
+.resume-sheet.theme-modern .rs-title { font-size: 14px; color: rgba(255,255,255,.8); margin-top: 4px; }
+.resume-sheet.theme-modern .rs-contact { display: flex; flex-wrap: wrap; gap: 4px 20px; margin-top: 12px; font-size: 12px; color: rgba(255,255,255,.85); }
+.resume-sheet.theme-modern .rs-contact a { color: rgba(255,255,255,.85); text-decoration: none; }
+.resume-sheet.theme-modern .rs-section-title { border-bottom: 2px solid #3878e7; color: #3878e7; margin-bottom: 10px; padding-bottom: 4px; font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; }
+
+/* ── Minimal theme ── */
+.resume-sheet.theme-minimal .rs-header { background: #fff; color: #1a1a2e; border-bottom: 3px solid #1a1a2e; padding: 32px 40px 20px; }
+.resume-sheet.theme-minimal .rs-name  { font-size: 30px; font-weight: 800; }
+.resume-sheet.theme-minimal .rs-title { font-size: 14px; color: #64748b; margin-top: 4px; }
+.resume-sheet.theme-minimal .rs-contact { display: flex; flex-wrap: wrap; gap: 4px 20px; margin-top: 12px; font-size: 12px; color: #64748b; }
+.resume-sheet.theme-minimal .rs-contact a { color: #3878e7; text-decoration: none; }
+.resume-sheet.theme-minimal .rs-section-title { border-bottom: 1px solid #cbd5e1; color: #1a1a2e; margin-bottom: 10px; padding-bottom: 4px; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; }
+
+/* Body of resume */
+.rs-body { padding: 28px 40px; display: grid; grid-template-columns: 1fr 1.8fr; gap: 24px; }
+.rs-left  { display: flex; flex-direction: column; gap: 20px; min-width: 0; word-break: break-word; }
+.rs-right { display: flex; flex-direction: column; gap: 20px; border-left: 1px solid #e2e8f0; padding-left: 24px; min-width: 0; word-break: break-word; }
+
+.rs-section { break-inside: avoid; overflow-wrap: break-word; }
+.rs-section-title { font-weight: 700; margin-bottom: 8px; }
+
+/* Summary */
+.rs-summary { font-size: 12.5px; color: #475569; line-height: 1.6; white-space: pre-wrap; }
+
+/* Skills */
+.rs-skills-group { margin-bottom: 8px; }
+.rs-skill-level { font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 4px; }
+.rs-skill-chips { display: flex; flex-wrap: wrap; gap: 4px; }
+.rs-skill-chip { padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; background: #f1f5f9; color: #334155; border: 1px solid #e2e8f0; }
+
+/* Experience / Education / Projects entries */
+.rs-entry { margin-bottom: 14px; }
+.rs-entry-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+.rs-entry-title { font-size: 13px; font-weight: 700; color: #1e293b; }
+.rs-entry-sub { font-size: 12px; color: #3878e7; font-weight: 600; margin-top: 1px; }
+.rs-entry-meta { font-size: 11px; color: #94a3b8; flex-shrink: 0; text-align: right; }
+.rs-entry-desc { font-size: 12px; color: #475569; margin-top: 5px; line-height: 1.55; white-space: pre-wrap; word-break: break-word; }
+.rs-entry-tech { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 5px; }
+.rs-tech-tag { font-size: 10.5px; font-weight: 600; background: #f1f5f9; color: #475569; border-radius: 3px; padding: 1px 6px; }
+.rs-entry-links { margin-top: 5px; display: flex; gap: 12px; flex-wrap: wrap; }
+.rs-entry-links a { font-size: 11px; color: #3878e7; text-decoration: none; font-weight: 600; word-break: break-all; }
+
+/* Photo in resume */
+.rs-header-inner { display: flex; align-items: center; gap: 20px; }
+.rs-photo { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; border: 3px solid rgba(255,255,255,.4); flex-shrink: 0; }
+.rs-photo-placeholder { width: 72px; height: 72px; border-radius: 50%; background: rgba(255,255,255,.2); display: grid; place-items: center; font-size: 32px; color: rgba(255,255,255,.6); flex-shrink: 0; }
+
+/* Font size variants — noticeable differences */
+.resume-sheet.fs-compact  { font-size: 10px !important; }
+.resume-sheet.fs-standard { font-size: 12.5px !important; }
+.resume-sheet.fs-spacious { font-size: 15px !important; }
+
+/* ═══════════════════════════════════════════
+   @MEDIA PRINT — clean PDF output
+   ═══════════════════════════════════════════ */
+@media print {
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    box-sizing: border-box;
+  }
+
+  /* Nuclear hide-everything approach */
+  html, body { margin: 0 !important; padding: 0 !important; }
+  body > * { display: none !important; }
+
+  /* Only reveal the resume sheet itself */
+  body > #resume-print-container { display: block !important; }
+
+  #resume-sheet {
+    display: block !important;
+    position: fixed !important;
+    top: 0 !important; left: 0 !important;
+    width: 100% !important;
+    min-height: 100vh !important;
+    background: #fff !important;
+    z-index: 99999 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    font-size: 12px;
+  }
+
+  /* Hide every sibling of #resume-sheet */
+  .sidebar, .topbar, .sidebar-overlay, .toast-container,
+  .modal-overlay, .resume-controls, .section-header,
+  .ats-score-card, .jd-panel, .jd-result-card,
+  .resume-builder-layout > *:not(.resume-preview-wrap) { display: none !important; }
+
+  .resume-preview-wrap {
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    display: block !important;
+    width: 100% !important;
+  }
+
+  .resume-sheet .rs-body { page-break-inside: auto; }
+  .resume-sheet .rs-entry { page-break-inside: avoid; }
+
+  @page { margin: 0; size: A4; }
+}
+
+/* Responsive resume builder */
+@media (max-width: 900px) {
+  .resume-builder-layout { grid-template-columns: 1fr; }
+  .resume-controls { position: static; }
+  .resume-preview-wrap { padding: var(--sp-2); overflow-x: auto; justify-content: flex-start; }
+  .resume-sheet { width: 794px; min-width: 794px; }
+}
+
+/* Download button group */
+.dl-btn-group { display: flex; gap: var(--sp-2); align-items: center; flex-wrap: wrap; }
+
+/* ═══════════════════════════════════════════
+   JD AI ANALYSIS PANEL
+   ═══════════════════════════════════════════ */
+.jd-panel { margin-top: var(--sp-5); border-top: 1px solid var(--clr-border); padding-top: var(--sp-5); }
+.jd-panel-header { display: flex; align-items: center; gap: var(--sp-3); margin-bottom: var(--sp-4); }
+.jd-panel-header .material-icons-round { font-size: 22px; flex-shrink: 0; }
+.jd-panel textarea {
+  width: 100%; box-sizing: border-box;
+  padding: var(--sp-3); border: 1.5px solid var(--clr-border);
+  border-radius: var(--radius-sm); background: var(--clr-bg);
+  color: var(--clr-text); font-family: inherit; font-size: var(--fs-xs);
+  resize: vertical; min-height: 90px; outline: none;
+  transition: border-color .2s;
+}
+.jd-panel textarea:focus { border-color: var(--clr-primary); box-shadow: 0 0 0 3px rgba(56,120,231,.12); }
+.jd-match-score { display: flex; align-items: center; gap: var(--sp-3); margin-bottom: 4px; }
+.jd-match-score .material-icons-round { font-size: 22px; }
+.jd-match-score.good  .material-icons-round { color: var(--clr-success); }
+.jd-match-score.fair  .material-icons-round { color: var(--clr-warning); }
+.jd-match-score.poor  .material-icons-round { color: var(--clr-danger);  }
+.jd-section-title { font-size: var(--fs-xs); font-weight: 700; margin-bottom: var(--sp-2); }
+.jd-chips { display: flex; flex-wrap: wrap; gap: 4px; }
+.jd-chip { padding: 2px 8px; border-radius: var(--radius-full); font-size: var(--fs-xs); font-weight: 600; }
+.jd-chip.matched { background: rgba(16,185,129,.12); color: var(--clr-success); border: 1px solid rgba(16,185,129,.3); }
+.jd-chip.missing  { background: rgba(245,158,11,.1);   color: #d97706;           border: 1px solid rgba(245,158,11,.3); }
+
+/* Highlight missing skill chip in resume */
+.rs-skill-chip.highlight-missing { background: rgba(245,158,11,.15) !important; border: 1.5px dashed #d97706 !important; color: #92400e !important; }
+
+/* JD result card */
+.jd-result-card { margin-top: var(--sp-4); border-top: 1px solid var(--clr-border); padding-top: var(--sp-4); }
+.jd-role-badge { display: inline-flex; align-items: center; gap: 4px; font-size: var(--fs-xs); font-weight: 700; background: rgba(56,120,231,.1); color: var(--clr-primary); border-radius: var(--radius-full); padding: 4px 10px; margin-bottom: var(--sp-3); border: 1px solid rgba(56,120,231,.2); }
+.jd-summary-preview { font-size: var(--fs-xs); color: var(--clr-text-sec); font-style: italic; line-height: 1.55; margin-bottom: var(--sp-3); border-left: 3px solid var(--clr-primary); padding-left: var(--sp-3); }
+.jd-stat { font-size: var(--fs-xs); color: var(--clr-success); font-weight: 600; margin-bottom: 4px; }
+.jd-tip  { font-size: var(--fs-xs); color: var(--clr-text-sec); margin-bottom: 4px; }
+
+/* Tailored badge inside resume sheet */
+.rs-tailored-badge { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: rgba(255,255,255,.7); padding: 4px 12px; text-align: right; border-bottom: 1px solid rgba(255,255,255,.1); }
+
+
+/* ═══════════════════════════════════════════
+   LOGIN OVERLAY
+   ═══════════════════════════════════════════ */
+.login-overlay {
+  position: fixed; inset: 0; z-index: 10000;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, #0a1628 0%, #1e3a5f 50%, #0a1628 100%);
+  overflow: hidden;
+  transition: opacity .4s ease, visibility .4s ease;
+}
+.login-overlay.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+
+/* Animated radial glows behind the card */
+.login-overlay::before, .login-overlay::after {
+  content: ''; position: absolute; border-radius: 50%;
+  animation: loginGlow 8s ease-in-out infinite alternate;
+}
+.login-overlay::before {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(56,120,231,.25) 0%, transparent 70%);
+  top: -100px; left: -100px;
+}
+.login-overlay::after {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(6,182,212,.18) 0%, transparent 70%);
+  bottom: -80px; right: -80px;
+  animation-delay: -4s;
+}
+@keyframes loginGlow {
+  from { transform: scale(1) translate(0,0); }
+  to   { transform: scale(1.2) translate(30px, 20px); }
+}
+
+.login-card {
+  position: relative; z-index: 1;
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.15);
+  backdrop-filter: blur(24px);
+  border-radius: 24px;
+  padding: 48px 40px;
+  width: 360px;
+  text-align: center;
+  box-shadow: 0 32px 64px rgba(0,0,0,.4);
+  animation: loginCardIn .6s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes loginCardIn {
+  from { opacity: 0; transform: translateY(24px) scale(.96); }
+  to   { opacity: 1; transform: none; }
+}
+
+.login-logo { width: 64px; height: 64px; border-radius: 16px; margin-bottom: 12px; }
+.login-title { font-size: 1.6rem; font-weight: 800; color: #fff; margin: 0 0 4px; letter-spacing: -.5px; }
+.login-subtitle { font-size: .875rem; color: rgba(255,255,255,.55); margin: 0; }
+.login-divider { height: 1px; background: rgba(255,255,255,.12); margin: 28px 0; }
+.login-prompt { font-size: .8rem; color: rgba(255,255,255,.55); margin: 0 0 20px; letter-spacing: .04em; text-transform: uppercase; }
+
+/* Centre the GIS button */
+.login-card .g_id_signin, #g_id_onload { display: flex; justify-content: center; }
+
+.login-tos { font-size: .72rem; color: rgba(255,255,255,.3); margin: 20px 0 0; line-height: 1.5; }
+
+/* Sign-out button in topbar */
+.signout-btn {
+  display: none; /* Hidden by default */
+  align-items: center; gap: 4px;
+  padding: 6px 14px; border-radius: 20px;
+  background: rgba(239,68,68,.12); border: 1px solid rgba(239,68,68,.3);
+  color: #ef4444; font-size: .8rem; font-weight: 600; cursor: pointer;
+  transition: background .2s, border-color .2s;
+}
+.signout-btn:hover { background: rgba(239,68,68,.2); border-color: rgba(239,68,68,.5); }
+.signout-btn .material-icons-round { font-size: 16px; }
